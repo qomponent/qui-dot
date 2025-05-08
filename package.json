@@ -1,0 +1,33 @@
+{
+  "name": "@qomponent/qui-dot",
+  "version": "999-SNAPSHOT",
+  "description": "A Lit-based web component to show dot files",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Phillip Kruger <phillip.kruger@phillip-kruger.com> (https://www.phillip-kruger.com)",
+  "homepage": "https://quarkus.io",
+  "license": "Apache-2.0",
+  "main": "qui-dot.js",
+  "module": "qui-dot.js",
+  "type": "module",
+  "keywords": [
+    "Quarkus",
+    "qomponent",
+    "web-components",
+    "dot",
+    "graphviz",
+    "viz.js"
+  ],
+  "scripts": {
+    "start": "web-dev-server --config web-dev-server.config.js"
+  },
+  "dependencies": {
+    "lit": "~3.2.0",
+    "@viz-js/viz": "^3.12.0"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.4.4",
+    "es-dev-server": "^1.55.1"
+  }
+}
