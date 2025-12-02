@@ -1,9 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { instance } from '@viz-js/viz';
+import Panzoom from '@panzoom/panzoom';
 
 export class QuiDot extends LitElement {
   static properties = {
-    dot: { type: String }
+    dot: { type: String },
+    enablePanZoom: { type: String },
   };
 
   static styles = css`
@@ -19,6 +21,7 @@ export class QuiDot extends LitElement {
   constructor() {
     super();
     this.dot = '';
+    this.enablePanZoom = 'true';
     this._viz = null;
   }
 
@@ -28,7 +31,7 @@ export class QuiDot extends LitElement {
   }
 
   updated(changedProps) {
-    if (changedProps.has('dot') && this._viz) {
+    if ((changedProps.has('dot') || changedProps.has('enablePanZoom')) && this._viz) {
       this._renderGraph();
     }
   }
@@ -37,9 +40,15 @@ export class QuiDot extends LitElement {
     try {
       const svg = await this._viz.renderSVGElement(this.dot);
       this.shadowRoot.innerHTML = '';
-      this.shadowRoot.appendChild(svg);
+      const container = document.createElement('div')
+      container.appendChild(svg);
+      this.shadowRoot.appendChild(container);
+      if (this.enablePanZoom === 'true') {
+        const panzoom = Panzoom(svg);
+        container.addEventListener('wheel', panzoom.zoomWithWheel)
+      }
     } catch (error) {
-      this.shadowRoot.innerHTML = `<pre style="color:red;">${error}</pre>`;
+      this.shadowRoot.innerHTML = `<pre style='color:red;'>${error}</pre>`;
     }
   }
 
